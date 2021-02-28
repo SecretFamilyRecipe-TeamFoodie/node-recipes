@@ -78,6 +78,18 @@ router.post('/login', verifyReq, (req, res) => {
     }
 })
 
+router.get('/:id', restricted, validateUserId, (req, res) => {
+    Users.findRecipesByUserId(req.params.id)
+      .then(recipes => {
+          res.status(200).json(recipes)
+      })
+      .catch(err => {
+          res.status(500).json({
+              message: `Server error: ${err}`
+          })
+      })
+})
+
 function makeToken(user) {
     const payload = {
         subject: user.user_id,
