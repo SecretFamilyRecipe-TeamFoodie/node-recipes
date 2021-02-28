@@ -73,10 +73,29 @@ function restricted(req, res, next) {
     }
 };
 
+function validateRecipeId(req, res, next) {
+    Recipes.getById(req.params.id)
+      .then(recipe => {
+          if(recipe) {
+              res.recipe = recipe;
+              next();
+          } else {
+              res.status(404).json({
+                  message: 'Invalid id, recipe not found.'
+              })
+          }
+      })
+      .catch(err => {
+          res.status(500).json({
+              message: `Server error: ${err}`
+          })
+      })
+}
 module.exports = {
     validate,
     verifyReq,
     validateUserId,
     isUserInDb,
-    restricted
+    restricted,
+    validateRecipeId
 }
