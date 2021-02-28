@@ -48,6 +48,47 @@ router.post('/register', isUserInDb, (req, res) => {
     }
 })
 
+router.post('/login', verifyReq, (req, res) => {
+    const { username, password } = req.body;
+    if(validate(req.body)) {
+        Users.find({ username: username})
+          .then(([user]) => {
+              if(user && bcryptjs.compareSync(password, user.password)) {
+                  const token = makeToken(user);
+                  const userObj = {
+                      user_id: user.user_id,
+                      username: user.username
+                    }
+                  res.status(200).json({ user: userObj, token: token })
+              } else {
+                  res.status(401).json({
+                      message: 'Incorrect username or password'
+                  })
+              }
+          })
+          .catch(err => {
+              res.status(500).json({
+                  message: err.message
+              })
+          })
+    } else {
+        res.status(400).json({
+            message: 'Username and password required'
+        })
+    }
+})
+
+function makeToken(user) {
+    const payload = {
+        subject: user.user_id,
+        username: user.username
+    }
+    const options = {
+        expiresIn: '1d'
+    }
+    return jwt.sign(payload, jwtSecret, options)
+}
+
 
 
 module.exports = router;
