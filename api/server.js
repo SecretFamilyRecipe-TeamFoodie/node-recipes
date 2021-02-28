@@ -1,8 +1,6 @@
 const express = require("express")
 const helmet = require("helmet")
 const cors = require("cors")
-const bcrypt = require('bcryptjs')
-const jwt = require('jsonwebtoken')
 
 const usersRouter = require('./users/users-router')
 const recipesRouter = require('./recipes/recipes-router')
