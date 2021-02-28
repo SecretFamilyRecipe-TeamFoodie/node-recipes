@@ -4,14 +4,13 @@ module.exports = {
     add,
     findById,
     find,
-    findRecipesByUserId
+    findRecipesByUserId,
+    findAll
 }
 
-function add(user) {
-    return db('users').insert(user)
-        .then(user_id => {
-            return findById(user_id)
-        })
+async function add(user) {
+    const [id] = await db('users').insert(user, 'user_id')
+    return findById(id)
 }
 
 function findById(id) {
@@ -23,10 +22,13 @@ function findById(id) {
 
 function find(filter) {
     return db('users')
-        .where('username', filter)
-        .first()
+        .where(filter)
 }
 
 function findRecipesByUserId(id) {
     return db('recipes').where('user_id', id)
+}
+
+function findAll(){
+    return db('users')
 }

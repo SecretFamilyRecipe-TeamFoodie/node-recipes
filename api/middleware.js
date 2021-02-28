@@ -38,7 +38,7 @@ function validateUserId(req, res, next) {
 
 async function isUserInDb(req, res, next) {
     try{
-      const rows = await Users.findBy({username: req.body.username})
+      const rows = await Users.find({username: req.body.username})
       if(!rows.length) {
         next();
       } else {
