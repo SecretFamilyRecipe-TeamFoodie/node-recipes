@@ -3,8 +3,8 @@ exports.up = async (knex) => {
     .createTable('users', (users) => {
         users.increments('user_id')
         users.string('username', 128).notNullable().unique()
-        users.string('first_name', 128).notNullable()
-        users.string('last_name', 128).notNullable()
+        users.string('firstname', 128).notNullable()
+        users.string('lastname', 128).notNullable()
         users.string('email', 256).notNullable().unique()
         users.string('password', 128).notNullable()
     })
