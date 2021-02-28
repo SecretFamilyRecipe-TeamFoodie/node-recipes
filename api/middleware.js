@@ -119,6 +119,34 @@ function validateRecipeReq(req, res, next) {
         next()
     }
 }
+
+function validateEditReq(req, res, next) {
+    const {title, category, source, ingredients, instructions} = req.body;
+    if(!title) {
+        res.status(400).json({
+            message: 'Title required'
+        })
+    } else if(!category) {
+        res.status(400).json({
+            message: 'Category required'
+        })
+    } else if(!source) {
+        res.status(400).json({
+            message: 'Source required'
+        })
+    } else if(!ingredients) {
+        res.status(400).json({
+            message: 'Ingredients required'
+        })
+    } else if(!instructions) {
+        res.status(400).json({
+            message: 'Instructions required'
+        })
+    } else {
+        next()
+    }
+}
+
 module.exports = {
     validate,
     verifyReq,
@@ -126,5 +154,6 @@ module.exports = {
     isUserInDb,
     restricted,
     validateRecipeId,
-    validateRecipeReq
+    validateRecipeReq,
+    validateEditReq
 }

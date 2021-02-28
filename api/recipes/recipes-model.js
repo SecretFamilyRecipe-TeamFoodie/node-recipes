@@ -1,6 +1,7 @@
 const db = require('../data/db-config')
 
 module.exports = {
+    getAll,
     getById,
     edit,
     remove,
@@ -8,6 +9,9 @@ module.exports = {
     getBySearch
 }
 
+function getAll() {
+    return db('recipes')
+}
 async function add(recipe) {
     const [id] = await db('recipes').insert(recipe, 'recipe_id')
     return getById(id)
@@ -22,7 +26,7 @@ function getBySearch(filter) {
 }
 
 async function edit(recipe_id, body) {
-    const [id] = await db('recipes').where('recipe_id', recipe_id).update(body)
+    const [id] = await db('recipes').where('recipe_id', recipe_id).update(body, 'recipe_id')
     return getById(id)
 }
 
