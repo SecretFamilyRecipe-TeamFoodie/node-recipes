@@ -65,4 +65,23 @@ router.delete('/:id', restricted, validateRecipeId, (req, res) => {
       })
 })
 
+router.get('/', restricted, (req, res) => {
+    let filter = req.query.search
+    if(!filter) {
+        res.status(400).json({
+            message: 'Nothing was provided to search.'
+        })
+    } else {
+    filter = '%'+filter+'%'
+    Recipes.getBySearch(filter)
+      .then(recipe => {
+            res.status(200).json(recipe)
+        })
+      .catch(err => {
+          res.status(500).json({
+              message: `Server error: ${err}`
+          })
+      })}
+})
+
 module.exports = router;

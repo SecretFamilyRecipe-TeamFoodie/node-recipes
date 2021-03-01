@@ -22,7 +22,7 @@ function getById(id) {
 }
 
 function getBySearch(filter) {
-    return db('recipes').where(filter)
+    return db('recipes').where('title', 'like', filter).orWhere('category', 'like', filter)
 }
 
 async function edit(recipe_id, body) {
