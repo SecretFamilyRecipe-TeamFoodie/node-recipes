@@ -121,7 +121,7 @@ Returns number of deleted objects
 
 Returns Recipe Object
 
-### GET /recipe/?=$titleORcategory
+### GET /recipe/?search=$titleORcategory
 - Get Recipe by Searching for Title or Category
 
 Requires:
